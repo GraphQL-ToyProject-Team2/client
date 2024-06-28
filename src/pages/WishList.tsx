@@ -45,6 +45,7 @@ const WishList = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   const accommodations = data?.accommodations;
+  const likedAccommodations = accommodations?.filter((item) => item.isLiked);
 
   return (
     <StWrapper>
@@ -52,12 +53,12 @@ const WishList = () => {
         <button onClick={() => navigate(-1)}>
           <StyledChevronLeft fontSize="large" />
         </button>
-        <></>
       </Header>
       <StRoomListContainer>
-        {accommodations
-          ?.filter((item) => item.isLiked)
-          .map((accommodation) => {
+        {likedAccommodations?.length === 0 ? (
+          <Text>마음에 드는 숙소에 좋아요를 눌러보세요.</Text>
+        ) : (
+          likedAccommodations?.map((accommodation) => {
             const { id, title, price, host, images } = accommodation;
 
             return (
@@ -66,11 +67,12 @@ const WishList = () => {
                 <div>
                   <h1>{title}</h1>
                   <h2>호스트 : {host.name}님</h2>
-                  <p>₩{price} /인</p>
+                  <p>₩{price} /박</p>
                 </div>
               </StRoomCard>
             );
-          })}
+          })
+        )}
       </StRoomListContainer>
       <Footer />
     </StWrapper>
@@ -125,8 +127,6 @@ const StRoomCard = styled.article`
 
     & > h2 {
       font-size: 15px;
-      font-size: 15px;
-
       color: #6a6a6a;
     }
 
@@ -157,4 +157,11 @@ const Header = styled.header`
 
 const StyledChevronLeft = styled(ChevronLeft)`
   font-size: 16px;
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
