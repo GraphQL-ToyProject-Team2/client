@@ -157,10 +157,3 @@ const Header = styled.header`
 const StyledChevronLeft = styled(ChevronLeft)`
   font-size: 16px;
 `;
-
-const Interaction = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-`;
