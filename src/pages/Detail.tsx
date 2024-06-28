@@ -96,7 +96,7 @@ const Detail = () => {
           data: {
             accommodation: {
               ...currentAccommodation.accommodation,
-              isLiked: !data.likeAccommodation.isLiked,
+              isLiked: data.likeAccommodation.isLiked,
             },
           },
         });
