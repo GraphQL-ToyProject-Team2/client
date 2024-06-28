@@ -149,7 +149,7 @@ const SearchBox = styled.div`
   padding: 20px;
   height: 55px;
   border-radius: 1000px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0 0 0 / 0.1);
   display: flex;
   align-items: center;
 `;
