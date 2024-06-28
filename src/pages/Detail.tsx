@@ -120,7 +120,7 @@ const Detail = () => {
             <Interaction>
               <ShareOutlined />
               {accommodation.isLiked ? (
-                <Favorite fontSize="large" onClick={handleLike} />
+                <Favorite fontSize="large" color="error" onClick={handleLike} />
               ) : (
                 <FavoriteBorder fontSize="large" onClick={handleLike} />
               )}
@@ -321,6 +321,7 @@ const BottomSheet = styled.div`
   border-top: 1px solid rgb(235 235 233);
   height: 80px;
   width: 100%;
+  max-width: 375px;
   position: fixed;
   bottom: 0;
   display: flex;
@@ -342,7 +343,7 @@ const Price = styled.span`
 `;
 
 const ReservationButton = styled.button`
-  width: 200px;
+  width: 150px;
   height: 48px;
   background-color: #ff385c;
   color: white;
