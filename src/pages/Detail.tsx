@@ -14,7 +14,7 @@ import {
   Tv,
 } from '@material-ui/icons';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const GET_DETAIL = gql`
   query GetAccommodation($id: ID!) {
@@ -109,14 +109,19 @@ const Detail = () => {
     likeAccommodation({ variables: { id: id } });
   };
 
+  const navigate = useNavigate();
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
   return (
     <>
       {accommodation && (
         <>
           <Header>
-            <StyledChevronLeft fontSize="large" />
+            <button onClick={() => navigate(-1)}>
+              <StyledChevronLeft fontSize="large" />
+            </button>
             <Interaction>
               <ShareOutlined />
               {accommodation.isLiked ? (
