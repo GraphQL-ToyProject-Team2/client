@@ -14,7 +14,6 @@ const GET_ACCOMMODATIONS = gql`
       description
       price
       host {
-        id
         name
       }
       images
@@ -55,15 +54,16 @@ const Main = () => {
     </Header>
     <StRoomListContainer>
       {accommodations?.map((accommodation) => {
-        const {id, title, description, price, host, images} = accommodation;
+        const {id, title, price, host, images} = accommodation;
 
         return(
           <StRoomCard key={id} onClick={() => navigate(`/detail/${id}`)}>
             <StThumbnail src={images[0]}/>
+            <div>
             <h1>{title}</h1>
-            <h2>{description}</h2>
-            <p>{price} / 원</p>
-            <p>{host.name}</p>
+            <h2>호스트 : {host.name}님</h2>
+            <p>₩{price} /인</p>
+            </div>
           </StRoomCard>
           )
         }
@@ -107,13 +107,53 @@ padding: 0 24px 0 24px;
 `
 
 const StRoomCard = styled.article`
-cursor: pointer;
-`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 20px;
+
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 12px;
+
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-15px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    & > h1 {
+      font-weight: 500;
+      font-size: 18px;
+    }
+
+    & > h2 {
+      font-size: 15px;
+      font-size: 15px;
+
+      color: #6a6a6a
+    }
+
+    & > p {
+      font-weight: 400;
+      font-size: 15px;
+
+      
+    }
+  }
+`;
 
 const StThumbnail = styled.img`
 width: 100%;
-height: 327px;
+height: 287px;
 object-fit: cover;
 border-radius: 12px;
-
 `
+
