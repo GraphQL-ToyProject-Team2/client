@@ -28,6 +28,6 @@
 ## 📚 Key Languages & Libraries
 
 - `Typescript`
-- `Next.js`
-- `vanilla-extract`
-- `Relay`
+- `React.js`
+- `styled-components`
+- `Apollo Client`
