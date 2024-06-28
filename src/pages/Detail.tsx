@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import Diamond from '../assets/diamond.png';
 import {
   Apartment,
@@ -14,6 +14,7 @@ import {
   Tv,
 } from '@material-ui/icons';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
 const GET_DETAIL = gql`
   query GetAccommodation($id: ID!) {
@@ -29,6 +30,14 @@ const GET_DETAIL = gql`
       }
       location
       images
+      isLiked
+    }
+  }
+`;
+
+const LIKE_ACCOMMODATION = gql`
+  mutation LikeAccommodation($id: ID!) {
+    likeAccommodation(id: $id) {
       isLiked
     }
   }
@@ -51,10 +60,55 @@ interface Accommodation {
   };
 }
 
+interface LikeAccommodation {
+  likeAccommodation: {
+    id: string;
+    isLiked: boolean;
+    __typename: string;
+  };
+}
+
 const Detail = () => {
-  const { loading, error, data } = useQuery<Accommodation>(GET_DETAIL, { variables: { id: 1 } });
-  console.log(data);
+  const { id } = useParams<{ id: string }>();
+
+  const { loading, error, data } = useQuery<Accommodation>(GET_DETAIL, { variables: { id: id }, skip: !id });
   const accommodation = data?.accommodation;
+
+  const [likeAccommodation] = useMutation<LikeAccommodation>(LIKE_ACCOMMODATION, {
+    optimisticResponse: {
+      likeAccommodation: {
+        id: id!,
+        __typename: 'Accommodation',
+        isLiked: !data?.accommodation?.isLiked,
+      },
+    },
+    update(cache, { data }) {
+      if (!data) return;
+      const currentAccommodation = cache.readQuery<{ accommodation: Accommodation }>({
+        query: GET_DETAIL,
+        variables: { id: id! },
+      });
+
+      if (currentAccommodation?.accommodation) {
+        cache.writeQuery({
+          query: GET_DETAIL,
+          variables: { id: id! },
+          data: {
+            accommodation: {
+              ...currentAccommodation.accommodation,
+              isLiked: !data.likeAccommodation.isLiked,
+            },
+          },
+        });
+      }
+    },
+    refetchQueries: [{ query: GET_DETAIL, variables: { id: id! } }],
+  });
+
+  const handleLike = () => {
+    likeAccommodation({ variables: { id: id } });
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   return (
@@ -65,7 +119,11 @@ const Detail = () => {
             <StyledChevronLeft fontSize="large" />
             <Interaction>
               <ShareOutlined />
-              {accommodation.isLiked ? <Favorite fontSize="large" /> : <FavoriteBorder />}
+              {accommodation.isLiked ? (
+                <Favorite fontSize="large" onClick={handleLike} />
+              ) : (
+                <FavoriteBorder fontSize="large" onClick={handleLike} />
+              )}
             </Interaction>
           </Header>
           <MainImage src={accommodation.images[0]} />
@@ -168,6 +226,7 @@ const Contents = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 24px;
+  margin-bottom: 24px;
 `;
 
 const Title = styled.h1`
