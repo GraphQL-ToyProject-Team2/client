@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import Search from '../assets/search.svg';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Footer from '../components/Footer';
 
 const GET_ACCOMMODATIONS = gql`
   query GetAccommodations {
@@ -68,6 +69,7 @@ const Main = () => {
           );
         })}
       </StRoomListContainer>
+      <Footer />
     </StWrapper>
   );
 };

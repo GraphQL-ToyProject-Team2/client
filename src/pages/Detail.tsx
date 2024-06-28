@@ -15,6 +15,7 @@ import {
 } from '@material-ui/icons';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const GET_DETAIL = gql`
   query GetAccommodation($id: ID!) {

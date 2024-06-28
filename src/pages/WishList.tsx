@@ -1,7 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { ChevronLeft, ShareOutlined, Favorite, FavoriteBorder } from '@material-ui/icons';
+import { ChevronLeft } from '@material-ui/icons';
+import Footer from '../components/Footer';
 
 const GET_ACCOMMODATIONS = gql`
   query GetAccommodations {
@@ -71,6 +72,7 @@ const WishList = () => {
             );
           })}
       </StRoomListContainer>
+      <Footer />
     </StWrapper>
   );
 };
@@ -79,11 +81,6 @@ export default WishList;
 
 const StWrapper = styled.main`
   width: 100%;
-`;
-
-const Img = styled.img`
-  width: 20px;
-  height: 20px;
 `;
 
 const StRoomListContainer = styled.section`
