@@ -81,6 +81,7 @@ export default WishList;
 
 const StWrapper = styled.main`
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 const StRoomListContainer = styled.section`

@@ -78,6 +78,7 @@ export default Main;
 
 const StWrapper = styled.main`
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 const Img = styled.img`
