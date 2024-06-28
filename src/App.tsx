@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import GlobalStyle from './styles/globalStyles';
 
 const MobileContainer = styled.div`
+  font-family: 'Pretendard Variable';
   display: flex;
 
   position: relative;
