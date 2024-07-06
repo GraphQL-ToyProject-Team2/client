@@ -84,23 +84,16 @@ const Detail = () => {
     },
     update(cache, { data }) {
       if (!data) return;
-      const currentAccommodation = cache.readQuery<{ accommodation: Accommodation }>({
+      cache.writeQuery<Accommodation>({
         query: GET_DETAIL,
-        variables: { id: id! },
-      });
-
-      if (currentAccommodation?.accommodation) {
-        cache.writeQuery({
-          query: GET_DETAIL,
-          variables: { id: id! },
+        variables: { id: id },
           data: {
             accommodation: {
-              ...currentAccommodation.accommodation,
-              isLiked: data.likeAccommodation.isLiked,
+            ...accommodation!,
+            isLiked: data?.likeAccommodation.isLiked,
             },
           },
         });
-      }
     },
     refetchQueries: [{ query: GET_DETAIL, variables: { id: id! } }],
   });
