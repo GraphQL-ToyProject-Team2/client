@@ -7,7 +7,6 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const curLocation = location.pathname.split('/')[1];
-  console.log(curLocation);
   return (
     <FooterWrapper>
       <ItemWrapper onClick={() => navigate('/')}>

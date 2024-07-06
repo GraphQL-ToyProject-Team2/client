@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ChevronLeft } from '@material-ui/icons';
 import Footer from '../components/Footer';
 
-const GET_ACCOMMODATIONS = gql`
+export const GET_WISHLIST = gql`
   query GetAccommodations {
     accommodations {
       id
@@ -39,7 +39,7 @@ interface Accommodations {
 
 const WishList = () => {
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery<Accommodations>(GET_ACCOMMODATIONS);
+  const { loading, error, data } = useQuery<Accommodations>(GET_WISHLIST);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

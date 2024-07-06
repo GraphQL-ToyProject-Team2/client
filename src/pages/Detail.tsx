@@ -15,6 +15,8 @@ import {
 } from '@material-ui/icons';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
+import { GET_ACCOMMODATIONS } from './Main';
+import { GET_WISHLIST } from './WishList';
 
 const GET_DETAIL = gql`
   query GetAccommodation($id: ID!) {
@@ -87,15 +89,15 @@ const Detail = () => {
       cache.writeQuery<Accommodation>({
         query: GET_DETAIL,
         variables: { id: id },
-          data: {
-            accommodation: {
+        data: {
+          accommodation: {
             ...accommodation!,
             isLiked: data?.likeAccommodation.isLiked,
-            },
           },
-        });
+        },
+      });
     },
-    refetchQueries: [{ query: GET_DETAIL, variables: { id: id! } }],
+    refetchQueries: [{ query: GET_WISHLIST, variables: { id: id } }],
   });
 
   const handleLike = () => {
